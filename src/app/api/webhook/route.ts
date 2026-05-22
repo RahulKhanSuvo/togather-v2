@@ -20,11 +20,17 @@ export async function POST(req: Request) {
         switch (event.type) {
             case "payment_intent.succeeded": {
                 const paymentIntent = event.data.object
-                console.log(paymentIntent)
                 sendMail({
                     to: paymentIntent.metadata?.email!,
                     subject: "Payment Succeeded",
-                    html: `<p>Payment Succeeded</p>`,
+                    html: `<p>Payment Succeeded</p>
+                    <p>Amount: ${paymentIntent.metadata?.amount}</p>
+                    <p>Frequency: ${paymentIntent.metadata?.frequency}</p>
+                    <p>Company Name: ${paymentIntent.metadata?.companyName}</p>
+                    <p>First Name: ${paymentIntent.metadata?.donerFirstName}</p>
+                    <p>Last Name: ${paymentIntent.metadata?.donerLastName}</p>
+                    <p>Phone Number: ${paymentIntent.metadata?.donerPhoneNumber}</p>
+                    `,
                 })
             }
             default: {
