@@ -20,6 +20,7 @@ export async function POST(req: Request) {
         switch (event.type) {
             case "payment_intent.succeeded": {
                 const paymentIntent = event.data.object
+                console.log(paymentIntent)
                 sendMail({
                     to: paymentIntent.metadata?.email!,
                     subject: "Payment Succeeded",
