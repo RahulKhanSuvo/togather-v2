@@ -91,6 +91,20 @@ export default function CheckoutForm({
                 console.error("Payment failed:", result.error.message);
                 alert(`Payment failed: ${result.error.message}`);
             } else if (result.paymentIntent?.status === "succeeded") {
+                // Confirm on server to trigger the email
+                try {
+                    await fetch("/api/confirm", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            paymentIntentId: result.paymentIntent.id,
+                            subscriptionId: data.subscriptionId, // will be undefined for one-time
+                        }),
+                    });
+                } catch (err) {
+                    console.error("Failed to send confirmation email", err);
+                }
+
                 const msg = isRecurring
                     ? `Your ${frequency} donation of $${amount} has been set up successfully!`
                     : `Payment of $${amount} succeeded!`;
