@@ -7,14 +7,18 @@ export default function CheckoutForm({
     firstName,
     lastName,
     notifySomeone,
-    setIsModalOpen
+    companyName, donerFirstName, donerLastName, email, donerPhoneNumber
 }: {
     amount: string;
     frequency: string;
     firstName: string;
     lastName: string;
     notifySomeone: boolean;
-    setIsModalOpen: (value: boolean) => void;
+    companyName: string;
+    donerFirstName: string;
+    donerLastName: string;
+    email: string;
+    donerPhoneNumber: string;
 }) {
     const stripe = useStripe();
     const elements = useElements();
@@ -36,7 +40,12 @@ export default function CheckoutForm({
                     frequency: frequency,
                     firstName: firstName,
                     lastName: lastName,
-                    notifySomeone: notifySomeone
+                    notifySomeone: notifySomeone,
+                    companyName: companyName,
+                    donerFirstName: donerFirstName,
+                    donerLastName: donerLastName,
+                    email: email,
+                    donerPhoneNumber: donerPhoneNumber
                 }),
             });
             const data = await res.json();
@@ -57,7 +66,6 @@ export default function CheckoutForm({
             if (result.paymentIntent?.status === "succeeded") {
                 console.log("payment done");
                 alert("payment done");
-                setIsModalOpen(false);
             }
         } catch (error) {
             console.log(error);
@@ -68,10 +76,29 @@ export default function CheckoutForm({
 
     return (
         <div>
-            <CardElement options={{
-                hidePostalCode: true
-            }} />
-            <button onClick={handlePlay} disabled={!stripe || loading}>
+            <div className="border"> <CardElement options={{
+                hidePostalCode: true,
+                style: {
+                    base: {
+                        fontSize: "24px",
+                        color: "#5A7184",
+
+                    }
+                }
+            }} /></div>
+            <button className="
+            h-[78px]
+            min-w-[250px]
+            rounded-[20px]
+            bg-[#006F95]
+            text-white
+            text-[22px]
+            font-semibold
+            uppercase
+            tracking-wide
+            hover:opacity-90
+            transition
+          "onClick={handlePlay} disabled={!stripe || loading}>
                 {loading ? "Loading..." : "pay now"}
             </button>
         </div>

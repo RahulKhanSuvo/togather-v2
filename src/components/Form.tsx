@@ -12,12 +12,11 @@ export default function DonationForm() {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [notifySomeone, setNotifySomeone] = useState(false);
-    const [isModalOpen, setIsModalOpen] = useState(false);
+
 
     const amounts = [10, 50, 100];
-    const openMOdal = async () => {
-        setIsModalOpen(true)
-    }
+
+
 
     return (
         <div>
@@ -127,18 +126,8 @@ export default function DonationForm() {
                 setNotifySomeone={setNotifySomeone}
             />
 
-            <StepThree handelSubmit={openMOdal} />
+            <StepThree firstName={firstName} lastName={lastName} notifySomeone={notifySomeone} amount={amount} frequency={frequency} />
 
-            {isModalOpen && (
-                <CheckOutModal
-                    setIsModalOpen={setIsModalOpen}
-                    amount={amount}
-                    frequency={frequency}
-                    firstName={firstName}
-                    lastName={lastName}
-                    notifySomeone={notifySomeone}
-                />
-            )}
         </div>
 
     );

@@ -3,7 +3,7 @@ import { NextResponse } from "next/server"
 
 export async function POST(req: Request) {
     try {
-        const { amount, frequency, firstName, lastName, notifySomeone } = await req.json()
+        const { amount, frequency, firstName, lastName, notifySomeone, companyName, donerFirstName, donerLastName, email, donerPhoneNumber } = await req.json()
         const paymentIntent = await stripe.paymentIntents.create({
             amount: Number(amount) * 100,
             currency: 'usd',
@@ -16,7 +16,12 @@ export async function POST(req: Request) {
                 lastName: lastName,
                 notifySomeone: notifySomeone,
                 frequency: frequency,
-                amount: amount
+                amount: amount,
+                companyName: companyName,
+                donerFirstName: donerFirstName,
+                donerLastName: donerLastName,
+                email: email,
+                donerPhoneNumber: donerPhoneNumber
             }
         })
         return NextResponse.json({ clientSecret: paymentIntent.client_secret }, { status: 200 })
