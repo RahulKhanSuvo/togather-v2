@@ -65,7 +65,7 @@ export async function POST(req: Request) {
                 save_default_payment_method: "on_subscription",
                 payment_method_types: ["card"],
             },
-            expand: ["latest_invoice.payment_intent"],
+            expand: ["latest_invoice.confirmation_secret"],
             metadata: {
                 firstName,
                 lastName,
@@ -80,11 +80,11 @@ export async function POST(req: Request) {
             },
         })
 
-        // Extract the client_secret from the first invoice's PaymentIntent
+        // Extract the client_secret from the first invoice's confirmation_secret
         const invoice = subscription.latest_invoice as {
-            payment_intent?: { client_secret: string | null }
+            confirmation_secret?: { client_secret: string | null }
         }
-        const clientSecret = invoice?.payment_intent?.client_secret
+        const clientSecret = invoice?.confirmation_secret?.client_secret
 
         if (!clientSecret) {
             return NextResponse.json({ error: "Failed to retrieve payment client secret" }, { status: 500 })
