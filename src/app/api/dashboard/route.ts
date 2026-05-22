@@ -9,7 +9,7 @@ export async function GET() {
         })
 
         const oneTimeDonations = paymentIntents.data
-            .filter((pi) => pi.status === "succeeded" && !pi.invoice)
+            .filter((pi) => pi.status === "succeeded" && !(pi as unknown as Record<string, unknown>).invoice)
             .map((pi) => ({
                 id: pi.id,
                 type: "one-time" as const,
