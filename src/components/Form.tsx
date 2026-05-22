@@ -1,6 +1,9 @@
 "use client"
 import { useState } from "react";
 import DedicationStep from "./DedicationStep";
+import StepThree from "./StepThree";
+import axios from "axios";
+import CheckOutModal from "./CheckOutModal";
 
 export default function DonationForm() {
     const [amount, setAmount] = useState("2");
@@ -9,9 +12,12 @@ export default function DonationForm() {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [notifySomeone, setNotifySomeone] = useState(false);
-
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const amounts = [10, 50, 100];
+    const openMOdal = async () => {
+
+    }
 
     return (
         <div>
@@ -120,6 +126,19 @@ export default function DonationForm() {
                 setLastName={setLastName}
                 setNotifySomeone={setNotifySomeone}
             />
+
+            <StepThree handelSubmit={openMOdal} />
+
+            {isModalOpen && (
+                <CheckOutModal
+                    setIsModalOpen={setIsModalOpen}
+                    amount={amount}
+                    frequency={frequency}
+                    firstName={firstName}
+                    lastName={lastName}
+                    notifySomeone={notifySomeone}
+                />
+            )}
         </div>
 
     );
