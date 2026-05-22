@@ -1,4 +1,13 @@
-export default function DedicationStep() {
+
+interface DedicationStepProps {
+    firstName: string;
+    lastName: string;
+    notifySomeone: boolean;
+    setFirstName: (value: string) => void;
+    setLastName: (value: string) => void;
+    setNotifySomeone: (value: boolean) => void;
+}
+export default function DedicationStep({ firstName, lastName, notifySomeone, setFirstName, setLastName, setNotifySomeone }: DedicationStepProps) {
     return (
         <div className="max-w-3xl mx-auto border-2 border-[#0077A3] rounded-[24px] p-8 md:p-12 bg-white">
             {/* Title */}
@@ -15,6 +24,8 @@ export default function DedicationStep() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
                 <input
                     type="text"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
                     placeholder="First Name"
                     className="
             h-[78px]
@@ -31,6 +42,8 @@ export default function DedicationStep() {
 
                 <input
                     type="text"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
                     placeholder="Last Name"
                     className="
             h-[78px]
@@ -49,6 +62,8 @@ export default function DedicationStep() {
             {/* Checkbox */}
             <label className="flex items-center gap-4 mb-16 cursor-pointer">
                 <input
+                    checked={notifySomeone}
+                    onChange={(e) => setNotifySomeone(e.target.checked)}
                     type="checkbox"
                     className="
             h-7

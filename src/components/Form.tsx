@@ -6,6 +6,9 @@ export default function DonationForm() {
     const [amount, setAmount] = useState("2");
     const [selectedAmount, setSelectedAmount] = useState<number | null>(null);
     const [frequency, setFrequency] = useState("one-time");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [notifySomeone, setNotifySomeone] = useState(false);
 
 
     const amounts = [10, 50, 100];
@@ -109,7 +112,14 @@ export default function DonationForm() {
                 </button>
             </div>
             {/* step second */}
-            <DedicationStep />
+            <DedicationStep
+                firstName={firstName}
+                lastName={lastName}
+                notifySomeone={notifySomeone}
+                setFirstName={setFirstName}
+                setLastName={setLastName}
+                setNotifySomeone={setNotifySomeone}
+            />
         </div>
 
     );
