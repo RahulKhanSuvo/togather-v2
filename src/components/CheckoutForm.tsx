@@ -1,29 +1,21 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useState } from "react";
+import { useFormContext } from "react-hook-form";
+import { DonationFormData } from "./Form";
 
-export default function CheckoutForm({
-    amount,
-    frequency,
-    firstName,
-    lastName,
-    notifySomeone,
-    companyName,
-    donerFirstName,
-    donerLastName,
-    email,
-    donerPhoneNumber,
-}: {
-    amount: string;
-    frequency: string;
-    firstName: string;
-    lastName: string;
-    notifySomeone: boolean;
-    companyName: string;
-    donerFirstName: string;
-    donerLastName: string;
-    email: string;
-    donerPhoneNumber: string;
-}) {
+export default function CheckoutForm() {
+    const { watch } = useFormContext<DonationFormData>();
+    const amount = watch("amount");
+    const frequency = watch("frequency");
+    const firstName = watch("firstName");
+    const lastName = watch("lastName");
+    const notifySomeone = watch("notifySomeone");
+    const companyName = watch("companyName");
+    const donerFirstName = watch("donerFirstName");
+    const donerLastName = watch("donerLastName");
+    const email = watch("email");
+    const donerPhoneNumber = watch("donerPhoneNumber");
+
     const stripe = useStripe();
     const elements = useElements();
     const [loading, setLoading] = useState(false);
@@ -120,28 +112,44 @@ export default function CheckoutForm({
     };
 
     return (
-        <div>
-            <div className="border">
+        <div className="mt-8">
+            <h3 className="text-[20px] font-medium text-[#2F4A5D] mb-4">Card details</h3>
+            <div className="border border-[#D4E3EC] rounded-[18px] p-4 bg-white mb-8">
                 <CardElement
                     options={{
                         hidePostalCode: true,
                         style: {
                             base: {
-                                fontSize: "24px",
+                                fontSize: "20px",
                                 color: "#5A7184",
+                                "::placeholder": {
+                                    color: "#aab7c4"
+                                }
                             },
                         },
                     }}
                 />
             </div>
+            
+            {/* Summary */}
+            <div className="border-t border-[#D4E3EC] pt-6 mb-8 flex justify-between items-center">
+                <div className="text-[20px] text-[#5A7184]">
+                    <span className="capitalize">{frequency.replace("-", " ")}</span> donation
+                </div>
+                <div className="text-[24px] font-semibold text-[#2F4A5D]">
+                    ${Number(amount).toFixed(2)}
+                </div>
+            </div>
+
             <button
+                type="button"
                 className="
-                    h-[78px]
-                    min-w-[250px]
+                    h-[60px] md:h-[78px]
+                    w-[300px] max-w-full
                     rounded-[20px]
                     bg-[#006F95]
                     text-white
-                    text-[22px]
+                    text-[18px] md:text-[22px]
                     font-semibold
                     uppercase
                     tracking-wide
@@ -153,9 +161,7 @@ export default function CheckoutForm({
             >
                 {loading
                     ? "Processing..."
-                    : isRecurring
-                    ? `Start ${frequency} donation`
-                    : "Pay Now"}
+                    : "DONATE NOW"}
             </button>
         </div>
     );

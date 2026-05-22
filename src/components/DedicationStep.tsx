@@ -1,22 +1,24 @@
+import { useFormContext } from "react-hook-form";
+import { DonationFormData } from "./Form";
 
 interface DedicationStepProps {
-    firstName: string;
-    lastName: string;
-    notifySomeone: boolean;
-    setFirstName: (value: string) => void;
-    setLastName: (value: string) => void;
-    setNotifySomeone: (value: boolean) => void;
+    onNext: () => void;
+    onSkip: () => void;
 }
-export default function DedicationStep({ firstName, lastName, notifySomeone, setFirstName, setLastName, setNotifySomeone }: DedicationStepProps) {
+
+export default function DedicationStep({ onNext, onSkip }: DedicationStepProps) {
+    const { register, watch } = useFormContext<DonationFormData>();
+    const notifySomeone = watch("notifySomeone");
+
     return (
-        <div className="max-w-3xl mx-auto border-2 border-[#0077A3] rounded-[24px] p-8 md:p-12 bg-white">
+        <div className="bg-white border-2 border-[#0077A3] rounded-[24px] p-8 md:p-12">
             {/* Title */}
-            <h2 className="text-[48px] font-light text-[#2F4A5D] mb-4">
+            <h2 className="text-[32px] md:text-[40px] font-light text-[#2F4A5D] mb-4">
                 Dedication
             </h2>
 
             {/* Description */}
-            <p className="text-[22px] text-[#5A7184] mb-10">
+            <p className="text-[20px] md:text-[22px] text-[#5A7184] mb-10">
                 Dedicate my donation in honor, memory, or support of someone.
             </p>
 
@@ -24,56 +26,27 @@ export default function DedicationStep({ firstName, lastName, notifySomeone, set
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
                 <input
                     type="text"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
+                    {...register("firstName")}
                     placeholder="First Name"
-                    className="
-            h-[78px]
-            rounded-[18px]
-            border
-            border-[#D4E3EC]
-            px-6
-            text-[24px]
-            text-[#5A7184]
-            outline-none
-            focus:border-[#0077A3]
-          "
+                    className="h-[60px] md:h-[78px] rounded-[18px] border border-[#D4E3EC] px-6 text-[20px] md:text-[24px] text-[#5A7184] outline-none focus:border-[#0077A3]"
                 />
 
                 <input
                     type="text"
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
+                    {...register("lastName")}
                     placeholder="Last Name"
-                    className="
-            h-[78px]
-            rounded-[18px]
-            border
-            border-[#D4E3EC]
-            px-6
-            text-[24px]
-            text-[#5A7184]
-            outline-none
-            focus:border-[#0077A3]
-          "
+                    className="h-[60px] md:h-[78px] rounded-[18px] border border-[#D4E3EC] px-6 text-[20px] md:text-[24px] text-[#5A7184] outline-none focus:border-[#0077A3]"
                 />
             </div>
 
             {/* Checkbox */}
             <label className="flex items-center gap-4 mb-16 cursor-pointer">
                 <input
-                    checked={notifySomeone}
-                    onChange={(e) => setNotifySomeone(e.target.checked)}
                     type="checkbox"
-                    className="
-            h-7
-            w-7
-            rounded
-            border-[#BFCBD4]
-          "
+                    {...register("notifySomeone")}
+                    className="h-7 w-7 rounded border-[#BFCBD4]"
                 />
-
-                <span className="text-[24px] text-[#5A7184]">
+                <span className="text-[20px] md:text-[24px] text-[#5A7184]">
                     Notify someone of my dedication
                 </span>
             </label>
@@ -81,30 +54,17 @@ export default function DedicationStep({ firstName, lastName, notifySomeone, set
             {/* Actions */}
             <div className="flex flex-wrap items-center gap-8">
                 <button
-                    className="
-            h-[78px]
-            min-w-[250px]
-            rounded-[20px]
-            bg-[#006F95]
-            text-white
-            text-[22px]
-            font-semibold
-            uppercase
-            tracking-wide
-            hover:opacity-90
-            transition
-          "
+                    type="button"
+                    onClick={onNext}
+                    className="h-[60px] md:h-[78px] min-w-[200px] md:min-w-[250px] rounded-[20px] bg-[#006F95] text-white text-[18px] md:text-[22px] font-semibold uppercase tracking-wide hover:opacity-90 transition"
                 >
-                    Next Step
+                    NEXT STEP
                 </button>
 
                 <button
-                    className="
-            text-[#006F95]
-            text-[24px]
-            font-medium
-            hover:underline
-          "
+                    type="button"
+                    onClick={onSkip}
+                    className="text-[#006F95] text-[20px] md:text-[24px] font-medium hover:underline"
                 >
                     Skip This Step
                 </button>
