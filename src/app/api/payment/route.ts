@@ -15,7 +15,6 @@ export async function POST(req: Request) {
         })
         return NextResponse.json({ clientSecret: paymentIntent.client_secret }, { status: 200 })
 
-
     } catch (error) {
         console.log(error)
         return NextResponse.json({ error: "Payment intent creation failed" }, { status: 500 })
