@@ -16,7 +16,7 @@ export default function DonationForm() {
 
     const amounts = [10, 50, 100];
     const openMOdal = async () => {
-
+        setIsModalOpen(true)
     }
 
     return (

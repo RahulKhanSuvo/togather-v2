@@ -15,8 +15,8 @@ export default function CheckOutModal({ amount, frequency, firstName, lastName, 
         })
     }
     return (
-        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
-            <div className="bg-white p-8 rounded-xl">
+        <div className="fixed top-0 left-0 w-full h-full bg-black/10 backdrop-blur-md bg-opacity-50 flex justify-center items-center">
+            <div className="bg-white p-8  w-full max-w-md rounded-xl">
                 <Elements stripe={stripePromise}>
                     <CheckoutForm />
                 </Elements>
