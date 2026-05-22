@@ -20,6 +20,7 @@ export default function CheckOutModal({ amount, frequency, firstName, lastName, 
                 <Elements stripe={stripePromise}>
                     <CheckoutForm />
                 </Elements>
+                <button onClick={() => setIsModalOpen(false)}>cancel</button>
             </div>
         </div>
     )
