@@ -18,7 +18,7 @@ export default function CheckOutModal({ amount, frequency, firstName, lastName, 
         <div className="fixed top-0 left-0 w-full h-full bg-black/10 backdrop-blur-md bg-opacity-50 flex justify-center items-center">
             <div className="bg-white p-8  w-full max-w-md rounded-xl">
                 <Elements stripe={stripePromise}>
-                    <CheckoutForm />
+                    <CheckoutForm firstName={firstName} lastName={lastName} notifySomeone={notifySomeone} setIsModalOpen={setIsModalOpen} amount={amount} frequency={frequency} />
                 </Elements>
                 <button onClick={() => setIsModalOpen(false)}>cancel</button>
             </div>

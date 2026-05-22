@@ -1,7 +1,21 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useState } from "react";
 
-export default function CheckoutForm() {
+export default function CheckoutForm({
+    amount,
+    frequency,
+    firstName,
+    lastName,
+    notifySomeone,
+    setIsModalOpen
+}: {
+    amount: string;
+    frequency: string;
+    firstName: string;
+    lastName: string;
+    notifySomeone: boolean;
+    setIsModalOpen: (value: boolean) => void;
+}) {
     const stripe = useStripe();
     const elements = useElements();
     const [loading, setLoading] = useState(false);
@@ -18,7 +32,11 @@ export default function CheckoutForm() {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    amount: 50,
+                    amount: amount,
+                    frequency: frequency,
+                    firstName: firstName,
+                    lastName: lastName,
+                    notifySomeone: notifySomeone
                 }),
             });
             const data = await res.json();
@@ -39,6 +57,7 @@ export default function CheckoutForm() {
             if (result.paymentIntent?.status === "succeeded") {
                 console.log("payment done");
                 alert("payment done");
+                setIsModalOpen(false);
             }
         } catch (error) {
             console.log(error);
@@ -49,7 +68,9 @@ export default function CheckoutForm() {
 
     return (
         <div>
-            <CardElement />
+            <CardElement options={{
+                hidePostalCode: true
+            }} />
             <button onClick={handlePlay} disabled={!stripe || loading}>
                 {loading ? "Loading..." : "pay now"}
             </button>
